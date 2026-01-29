@@ -319,6 +319,275 @@
             100% { transform: rotate(0deg); }
         }
 
+                /* Gesture-specific animations for Russian Sign Language */
+        
+        /* Wave gesture - for привет, здравствуйте */
+        .arm.gesture-wave {
+            animation: gesture-wave 1s ease-in-out infinite;
+        }
+        @keyframes gesture-wave {
+            0%, 100% { transform: rotate(-20deg) translateY(0); }
+            50% { transform: rotate(20deg) translateY(-10px); }
+        }
+        
+        /* Thank gesture - for спасибо */
+        .arm.gesture-thank {
+            animation: gesture-thank 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-thank {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(-30deg) translateY(-15px); }
+        }
+        
+        /* Please gesture - for пожалуйста */
+        .arm.gesture-please {
+            animation: gesture-please 2s ease-in-out infinite;
+        }
+        @keyframes gesture-please {
+            0%, 100% { transform: rotate(10deg); }
+            33% { transform: rotate(-10deg) translateX(5px); }
+            66% { transform: rotate(10deg) translateX(-5px); }
+        }
+        
+        /* Yes gesture - for да */
+        .arm.gesture-yes {
+            animation: gesture-yes 1s ease-in-out infinite;
+        }
+        @keyframes gesture-yes {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        /* No gesture - for нет */
+        .arm.gesture-no {
+            animation: gesture-no 1.2s ease-in-out infinite;
+        }
+        @keyframes gesture-no {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+        
+        /* Good gesture - for хорошо */
+        .arm.gesture-good {
+            animation: gesture-good 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-good {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(45deg) scale(1.1); }
+        }
+        
+        /* Bad gesture - for плохо */
+        .arm.gesture-bad {
+            animation: gesture-bad 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-bad {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(-45deg) scale(0.9); }
+        }
+        
+        /* Help gesture - for помощь */
+        .arm.gesture-help {
+            animation: gesture-help 1.8s ease-in-out infinite;
+        }
+        @keyframes gesture-help {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(15deg); }
+        }
+        
+        /* Water gesture - for вода */
+        .arm.gesture-water {
+            animation: gesture-water 2s ease-in-out infinite;
+        }
+        @keyframes gesture-water {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-10px); }
+            75% { transform: translateY(10px); }
+        }
+        
+        /* Eat gesture - for еда */
+        .arm.gesture-eat {
+            animation: gesture-eat 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-eat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-10px) scale(1.1); }
+        }
+
+                /* Additional gestures */
+        
+        /* Home gesture - for дом */
+        .arm.gesture-home {
+            animation: gesture-home 1.8s ease-in-out infinite;
+        }
+        @keyframes gesture-home {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg) translateY(-10px); }
+        }
+        
+        /* Work gesture - for работа */
+        .arm.gesture-work {
+            animation: gesture-work 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-work {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-15px); }
+        }
+        
+        /* Family gesture - for семья */
+        .arm.gesture-family {
+            animation: gesture-family 2s ease-in-out infinite;
+        }
+        @keyframes gesture-family {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        /* Friend gesture - for друг */
+        .arm.gesture-friend {
+            animation: gesture-friend 1.8s ease-in-out infinite;
+        }
+        @keyframes gesture-friend {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+        }
+        
+        /* Love gesture - for любовь */
+        .arm.gesture-love {
+            animation: gesture-love 2.5s ease-in-out infinite;
+        }
+        @keyframes gesture-love {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+        }
+        
+        /* Time gesture - for время */
+        .arm.gesture-time {
+            animation: gesture-time 2s ease-in-out infinite;
+        }
+        @keyframes gesture-time {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(360deg); }
+        }
+        
+        /* Day gesture - for день */
+        .arm.gesture-day {
+            animation: gesture-day 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-day {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        /* Night gesture - for ночь */
+        .arm.gesture-night {
+            animation: gesture-night 2s ease-in-out infinite;
+        }
+        @keyframes gesture-night {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(15px) rotate(-10deg); }
+        }
+        
+        /* Study gesture - for учиться */
+        .arm.gesture-study {
+            animation: gesture-study 1.8s ease-in-out infinite;
+        }
+        @keyframes gesture-study {
+            0%, 100% { transform: rotate(-15deg); }
+            50% { transform: rotate(15deg); }
+        }
+        
+        /* Read gesture - for читать */
+        .arm.gesture-read {
+            animation: gesture-read 2s ease-in-out infinite;
+        }
+        @keyframes gesture-read {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.05); }
+        }
+
+                /* Write gesture - for писать */
+        .arm.gesture-write {
+            animation: gesture-write 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-write {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            50% { transform: translateX(10px) rotate(5deg); }
+        }
+        
+        /* Speak gesture - for говорить */
+        .arm.gesture-speak {
+            animation: gesture-speak 1.2s ease-in-out infinite;
+        }
+        @keyframes gesture-speak {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* Listen gesture - for слушать */
+        .arm.gesture-listen {
+            animation: gesture-listen 2s ease-in-out infinite;
+        }
+        @keyframes gesture-listen {
+            0%, 100% { transform: rotate(0deg) translateY(0); }
+            50% { transform: rotate(10deg) translateY(-5px); }
+        }
+        
+        /* Think gesture - for думать */
+        .arm.gesture-think {
+            animation: gesture-think 2.5s ease-in-out infinite;
+        }
+        @keyframes gesture-think {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(15deg); }
+        }
+        
+        /* Understand gesture - for понимать */
+        .arm.gesture-understand {
+            animation: gesture-understand 1.8s ease-in-out infinite;
+        }
+        @keyframes gesture-understand {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.15) rotate(-10deg); }
+        }
+        
+        /* Know gesture - for знать */
+        .arm.gesture-know {
+            animation: gesture-know 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-know {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        
+        /* Want gesture - for хотеть */
+        .arm.gesture-want {
+            animation: gesture-want 1.8s ease-in-out infinite;
+        }
+        @keyframes gesture-want {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(12px) scale(1.1); }
+        }
+        
+        /* Walk gesture - for идти */
+        .arm.gesture-walk {
+            animation: gesture-walk 1.5s ease-in-out infinite;
+        }
+        @keyframes gesture-walk {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(10deg); }
+            75% { transform: translateY(8px) rotate(-10deg); }
+        }
+        
+        /* Stand gesture - for стоять */
+        .arm.gesture-stand {
+            animation: gesture-stand 2s ease-in-out infinite;
+        }
+        @keyframes gesture-stand {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+        }
+
         .avatar-status {
             position: absolute;
             bottom: -40px;
@@ -664,14 +933,71 @@
             }
         }
 
+        // Russian Sign Language gesture dictionary
+        const signGestures = {
+            'привет': 'wave',
+            'здравствуйте': 'wave',
+            'спасибо': 'thank',
+            'пожалуйста': 'please',
+            'да': 'yes',
+            'нет': 'no',
+            'хорошо': 'good',
+            'плохо': 'bad',
+            'помощь': 'help',
+            'вода': 'water',
+            'еда': 'eat',
+            'дом': 'home',
+            'работа': 'work',
+            'семья': 'family',
+            'друг': 'friend',
+            'любовь': 'love',
+            'время': 'time',
+            'день': 'day',
+            'ночь': 'night',
+            'учиться': 'study',
+            'читать': 'read',
+            'писать': 'write',
+            'говорить': 'speak',
+            'слушать': 'listen',
+            'думать': 'think',
+            'понимать': 'understand',
+            'знать': 'know',
+            'хотеть': 'want',
+            'идти': 'walk',
+            'стоять': 'stand'
+        };
+        
         function animateAvatarSpeaking(text) {
             // Animate mouth
             avatarMouth.classList.add('speaking');
-
-            // Animate arms in sign language gesture
-            armLeft.classList.add('signing');
-            armRight.classList.add('signing');
-
+            
+            // Parse text into words and apply gestures
+            const words = text.toLowerCase().split(/\s+/);
+            let hasGesture = false;
+            
+            // Remove all previous gesture classes
+            armLeft.className = 'arm arm-left';
+            armRight.className = 'arm arm-right';
+            
+            // Find and apply gesture for recognized words
+            for (let word of words) {
+                // Remove punctuation
+                word = word.replace(/[.,!?;:]/g, '');
+                if (signGestures[word]) {
+                    const gesture = signGestures[word];
+                    armLeft.classList.add('gesture-' + gesture);
+                    armRight.classList.add('gesture-' + gesture);
+                    hasGesture = true;
+                    break; // Use first recognized word
+                }
+            }
+            
+            // Default signing animation if no specific gesture found
+            if (!hasGesture) {
+                armLeft.classList.add('signing');
+                armRight.classList.add('signing');
+            }
+            
             // Activate wave bars based on text length
             const waveBars = document.querySelectorAll('.wave-bar');
             const intensity = Math.min(text.length / 10, 3);
@@ -682,10 +1008,10 @@
                     bar.classList.remove('active');
                 }
             });
-
+            
             // Update status
             avatarStatus.textContent = `Переводит: "${text.substring(0, 30)}..."`;
-
+            
             // Keep animation for duration of speech
             const duration = Math.min(text.length * 100, 5000);
             setTimeout(() => {
@@ -694,7 +1020,6 @@
                 }
             }, duration);
         }
-
         function stopAvatarAnimation() {
             avatarMouth.classList.remove('speaking');
             armLeft.classList.remove('signing');
