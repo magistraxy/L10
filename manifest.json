@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "Переводчик голоса в язык жестов",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "Жесты",
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "description": "Приложение для перевода голоса в язык жестов с синхронными субтитрами и анимированным аватаром"
+}
