@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переводчик голоса в язык жестов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0284c7;
+            --primary-hover: #0369a1;
+            --bg-base: #ffffff;
+            --bg-surface: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: #e2e8f0;
+            --success-color: #16a34a;
+            --danger-color: #dc2626;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel h2 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .button-secondary {
+            background: #64748b;
+            margin-top: 10px;
+        }
+
+        .button-secondary:hover {
+            background: #475569;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 10px;
+        }
+
+        .status.recording {
+            background: rgba(220, 38, 38, 0.1);
+            color: var(--danger-color);
+        }
+
+        .status.recording::before {
+            content: '●';
+            font-size: 1.2rem;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0.3; }
+        }
+
+        .status.idle {
+            background: rgba(22, 163, 74, 0.1);
+            color: var(--success-color);
+        }
+
+        .output-area {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 120px;
+            margin-top: 15px;
+            word-wrap: break-word;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .subtitles {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            line-height: 1.8;
+            text-align: center;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 40px 20px;
+            min-height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 200px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Avatar Head */
+        .avatar-head {
+            width: 80px;
+            height: 90px;
+            background: #f4a460;
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Eyes */
+        .avatar-eye {
+            position: absolute;
+            width: 12px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            top: 30px;
+        }
+
+        .avatar-eye.left {
+            left: 20px;
+        }
+
+        .avatar-eye.right {
+            right: 20px;
+        }
+
+        .avatar-pupil {
+            position: absolute;
+            width: 6px;
+            height: 8px;
+            background: #333;
+            border-radius: 50%;
+            top: 4px;
+            left: 3px;
+        }
+
+        /* Mouth */
+        .avatar-mouth {
+            position: absolute;
+            width: 20px;
+            height: 10px;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid #333;
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .avatar-mouth.speaking {
+            animation: talk 0.3s infinite;
+        }
+
+        @keyframes talk {
+            0%, 100% { height: 10px; }
+            50% { height: 15px; }
+        }
+
+        /* Body and Arms */
+        .avatar-body {
+            width: 60px;
+            height: 70px;
+            background: #4169e1;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .avatar-arm {
+            position: absolute;
+            width: 15px;
+            height: 60px;
+            background: #f4a460;
+            border-radius: 10px;
+            top: 5px;
+        }
+
+        .avatar-arm.left {
+            left: -18px;
+            transform-origin: top center;
+        }
+
+        .avatar-arm.right {
+            right: -18px;
+            transform-origin: top center;
+        }
+
+        .avatar-arm.signing {
+            animation: sign-gesture 0.8s ease-in-out infinite;
+        }
+
+        .avatar-arm.left.signing {
+            animation: sign-gesture-left 0.8s ease-in-out infinite;
+        }
+
+        @keyframes sign-gesture {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-45deg); }
+            50% { transform: rotate(-90deg); }
+            75% { transform: rotate(-45deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes sign-gesture-left {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(45deg); }
+            50% { transform: rotate(90deg); }
+            75% { transform: rotate(45deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .avatar-status {
+            position: absolute;
+            bottom: -40px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+        }
+
+        .bottom-section {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        .bottom-section h2 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .transcript {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 100px;
+            max-height: 200px;
+            overflow-y: auto;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .transcript-empty {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .info-banner {
+            background: #e0f2fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            color: #0369a1;
+            font-size: 0.95rem;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .language-selector select {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            background: white;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .panel {
+                padding: 15px;
+            }
+
+            .avatar-container {
+                min-height: 200px;
+                padding: 20px;
+            }
+        }
+
+        .wave-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 3px;
+        }
+
+        .wave-bar {
+            width: 3px;
+            height: 20px;
+            background: white;
+            border-radius: 2px;
+            opacity: 0.5;
+        }
+
+        .wave-bar.active {
+            animation: wave 0.6s ease-in-out infinite;
+        }
+
+        @keyframes wave {
+            0%, 100% { height: 20px; opacity: 0.5; }
+            50% { height: 35px; opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎤 Переводчик голоса в язык жестов</h1>
+            <p class="subtitle">Реальный перевод речи в жестовый язык с синхронными субтитрами</p>
+        </header>
+
+        <div class="info-banner">
+            ℹ️ Это веб-прототип. Для работы требуется браузер с поддержкой Web Speech API (Chrome, Edge, Safari).
+            Используются симуляция речи для демонстрации функционала.
+        </div>
+
+        <div class="main-layout">
+            <!-- Left Panel: Voice Input & Controls -->
+            <div class="panel">
+                <h2>🎙️ Ввод голоса</h2>
+                
+                <div class="control-group">
+                    <label class="control-label">Выберите язык:</label>
+                    <div class="language-selector">
+                        <select id="languageSelect">
+                            <option value="ru-RU">Русский</option>
+                            <option value="en-US">English</option>
+                            <option value="de-DE">Deutsch</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button id="startButton" onclick="startListening()">🎤 Начать запись голоса</button>
+                <button id="stopButton" class="button-secondary" onclick="stopListening()" disabled>⏹ Остановить запись</button>
+
+                <div id="status" class="status idle">
+                    ✓ Готово к записи
+                </div>
+
+                <div class="control-group" style="margin-top: 20px;">
+                    <label class="control-label">Распознанный текст:</label>
+                    <div class="output-area" id="transcriptOutput">
+                        <span class="transcript-empty">Здесь появится распознанный текст...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Avatar & Gestures -->
+            <div class="panel">
+                <h2>🧑‍🦰 Аватар переводчика</h2>
+                
+                <div class="avatar-container">
+                    <div class="wave-container" id="waveContainer">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+
+                    <div class="avatar" id="avatar">
+                        <!-- Head -->
+                        <div class="avatar-head">
+                            <div class="avatar-eye left">
+                                <div class="avatar-pupil"></div>
+                            </div>
+                            <div class="avatar-eye right">
+                                <div class="avatar-pupil"></div>
+                            </div>
+                            <div class="avatar-mouth" id="avatarMouth"></div>
+                        </div>
+
+                        <!-- Body -->
+                        <div class="avatar-body">
+                            <div class="avatar-arm left" id="armLeft"></div>
+                            <div class="avatar-arm right" id="armRight"></div>
+                        </div>
+                    </div>
+
+                    <div class="avatar-status" id="avatarStatus">Слушает...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subtitles Section -->
+        <div class="panel">
+            <h2>📝 Субтитры (синхронно с жестами)</h2>
+            <div class="subtitles" id="subtitles">
+                Начните говорить чтобы увидеть субтитры...
+            </div>
+        </div>
+
+        <!-- Bottom: Full Transcript -->
+        <div class="bottom-section">
+            <h2>📋 Полная стенограмма сеанса</h2>
+            <div class="transcript" id="fullTranscript">
+                <span class="transcript-empty">История распознавания появится здесь...</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Speech Recognition Setup
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+
+        let isListening = false;
+        let fullTranscriptHistory = [];
+        let isAvatarSigning = false;
+
+        recognition.continuous = true;
+        recognition.interimResults = true;
+
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const statusDiv = document.getElementById('status');
+        const transcriptOutput = document.getElementById('transcriptOutput');
+        const subtitles = document.getElementById('subtitles');
+        const fullTranscript = document.getElementById('fullTranscript');
+        const avatarStatus = document.getElementById('avatarStatus');
+        const languageSelect = document.getElementById('languageSelect');
+        const armLeft = document.getElementById('armLeft');
+        const armRight = document.getElementById('armRight');
+        const avatarMouth = document.getElementById('avatarMouth');
+        const waveContainer = document.getElementById('waveContainer');
+
+        // Set language
+        languageSelect.addEventListener('change', (e) => {
+            recognition.lang = e.target.value;
+        });
+
+        recognition.onstart = () => {
+            isListening = true;
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            statusDiv.className = 'status recording';
+            statusDiv.textContent = '● Идет запись...';
+            avatarStatus.textContent = 'Слушает активно...';
+            activateWaveAnimation();
+        };
+
+        recognition.onresult = (event) => {
+            let interimTranscript = '';
+            let finalTranscript = '';
+
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    finalTranscript += transcript + ' ';
+                } else {
+                    interimTranscript += transcript;
+                }
+            }
+
+            // Display current text
+            const currentText = finalTranscript || interimTranscript;
+            transcriptOutput.innerHTML = currentText || '<span class="transcript-empty">Слушаю...</span>';
+
+            // Animate avatar when speaking
+            if (currentText) {
+                animateAvatarSpeaking(currentText);
+            }
+
+            // Update subtitles
+            subtitles.textContent = currentText || 'Слушаю...';
+
+            // Add to history if final
+            if (finalTranscript) {
+                fullTranscriptHistory.push(finalTranscript.trim());
+                updateFullTranscript();
+            }
+        };
+
+        recognition.onerror = (event) => {
+            statusDiv.className = 'status idle';
+            let errorMessage = event.error;
+            let helpText = '';
+            
+            // Помощь для конкретных ошибок
+            if (event.error === 'not-allowed') {
+                helpText = ' — Микрофон запрещен в браузере. Проверьте разрешения.';
+            } else if (event.error === 'no-speech') {
+                helpText = ' — Речь не обнаружена. Говорите громче или ближе к микрофону.';
+            } else if (event.error === 'audio-capture') {
+                helpText = ' — Микрофон недоступен. Может быть занят другим приложением.';
+            } else if (event.error === 'network') {
+                helpText = ' — Проблема с сетью. Проверьте интернет.';
+            }
+            
+            statusDiv.textContent = '✗ Ошибка: ' + errorMessage + helpText;
+            avatarStatus.textContent = 'Произошла ошибка: ' + errorMessage;
+            deactivateWaveAnimation();
+            
+            console.error('Speech Recognition Error:', event.error, event);
+        };
+
+        recognition.onend = () => {
+            isListening = false;
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            statusDiv.className = 'status idle';
+            statusDiv.textContent = '✓ Запись завершена';
+            avatarStatus.textContent = 'Готов к следующей фразе';
+            deactivateWaveAnimation();
+            stopAvatarAnimation();
+        };
+
+        function startListening() {
+            try {
+                recognition.lang = languageSelect.value;
+                transcriptOutput.innerHTML = '<span class="transcript-empty">Слушаю...</span>';
+                subtitles.textContent = 'Слушаю...';
+                recognition.start();
+            } catch (e) {
+                statusDiv.className = 'status idle';
+                statusDiv.textContent = '✗ Ошибка запуска: ' + e.message;
+                alert('Не удалось запустить распознавание речи:\n\n' + e.message + '\n\nУбедитесь, что:\n1. Браузер поддерживает Web Speech API\n2. Вы разрешили доступ к микрофону\n3. Микрофон подключен и включен');
+                startButton.disabled = false;
+                stopButton.disabled = true;
+            }
+        }
+
+        function stopListening() {
+            recognition.stop();
+        }
+
+        function updateFullTranscript() {
+            if (fullTranscriptHistory.length === 0) {
+                fullTranscript.innerHTML = '<span class="transcript-empty">История распознавания появится здесь...</span>';
+            } else {
+                fullTranscript.innerHTML = fullTranscriptHistory
+                    .map((text, idx) => `<div style="margin-bottom: 10px;"><strong>[${idx + 1}]</strong> ${text}</div>`)
+                    .join('');
+                fullTranscript.scrollTop = fullTranscript.scrollHeight;
+            }
+        }
+
+        function animateAvatarSpeaking(text) {
+            // Animate mouth
+            avatarMouth.classList.add('speaking');
+
+            // Animate arms in sign language gesture
+            armLeft.classList.add('signing');
+            armRight.classList.add('signing');
+
+            // Activate wave bars based on text length
+            const waveBars = document.querySelectorAll('.wave-bar');
+            const intensity = Math.min(text.length / 10, 3);
+            waveBars.forEach((bar, idx) => {
+                if (idx < Math.ceil(intensity)) {
+                    bar.classList.add('active');
+                } else {
+                    bar.classList.remove('active');
+                }
+            });
+
+            // Update status
+            avatarStatus.textContent = `Переводит: "${text.substring(0, 30)}..."`;
+
+            // Keep animation for duration of speech
+            const duration = Math.min(text.length * 100, 5000);
+            setTimeout(() => {
+                if (!isListening) {
+                    stopAvatarAnimation();
+                }
+            }, duration);
+        }
+
+        function stopAvatarAnimation() {
+            avatarMouth.classList.remove('speaking');
+            armLeft.classList.remove('signing');
+            armRight.classList.remove('signing');
+            deactivateWaveAnimation();
+        }
+
+        function activateWaveAnimation() {
+            const waveBars = document.querySelectorAll('.wave-bar');
+            waveBars.forEach((bar, idx) => {
+                setTimeout(() => {
+                    bar.classList.add('active');
+                }, idx * 100);
+            });
+        }
+
+        function deactivateWaveAnimation() {
+            const waveBars = document.querySelectorAll('.wave-bar');
+            waveBars.forEach(bar => {
+                bar.classList.remove('active');
+            });
+        }
+
+        // Check browser support
+        if (!SpeechRecognition) {
+            alert('❌ Ваш браузер не поддерживает Web Speech API.\n\nИспользуйте:\n• Google Chrome\n• Microsoft Edge\n• Safari (iOS/macOS)');
+            startButton.disabled = true;
+        } else {
+            // Дополнительная проверка при загрузке
+            console.log('✓ Web Speech API поддерживается');
+            console.log('Язык браузера:', navigator.language);
+            console.log('Пользовательский агент:', navigator.userAgent);
+        }
+    </script>
+</body>
+</html>
