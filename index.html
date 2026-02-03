@@ -591,6 +591,82 @@
         .avatar-status {
             position: absolute;
             bottom: -40px;
+
+                    /* Medical gesture animations */
+        .avatar-arm.gesture-doctor { animation: gesture-doctor 2s ease-in-out infinite; }
+        @keyframes gesture-doctor { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-20deg) translateY(-10px); } }
+        
+        .avatar-arm.gesture-pain { animation: gesture-pain 1.5s ease-in-out infinite; }
+        @keyframes gesture-pain { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1) rotate(-5deg); } }
+        
+        .avatar-arm.gesture-health { animation: gesture-health 2s ease-in-out infinite; }
+        @keyframes gesture-health { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px) scale(1.1); } }
+        
+        .avatar-arm.gesture-sick { animation: gesture-sick 2s ease-in-out infinite; }
+        @keyframes gesture-sick { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg) translateY(10px); } }
+        
+        .avatar-arm.gesture-medicine { animation: gesture-medicine 1.8s ease-in-out infinite; }
+        @keyframes gesture-medicine { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        
+        .avatar-arm.gesture-hospital { animation: gesture-hospital 2s ease-in-out infinite; }
+        @keyframes gesture-hospital { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        .avatar-arm.gesture-ambulance { animation: gesture-ambulance 1.2s ease-in-out infinite; }
+        @keyframes gesture-ambulance { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(15px); } }
+        
+        .avatar-arm.gesture-head { animation: gesture-head 1.8s ease-in-out infinite; }
+        @keyframes gesture-head { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(10deg); } }
+        
+        .avatar-arm.gesture-stomach { animation: gesture-stomach 2s ease-in-out infinite; }
+        @keyframes gesture-stomach { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(15px); } }
+        
+        .avatar-arm.gesture-heart { animation: gesture-heart 1.5s ease-in-out infinite; }
+        @keyframes gesture-heart { 0%, 100% { transform: scale(1); } 25%, 75% { transform: scale(1.1); } 50% { transform: scale(1.2); } }
+        
+        .avatar-arm.gesture-throat { animation: gesture-throat 1.8s ease-in-out infinite; }
+        @keyframes gesture-throat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .avatar-arm.gesture-fever { animation: gesture-fever 1.5s ease-in-out infinite; }
+        @keyframes gesture-fever { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(15deg); } }
+        
+        .avatar-arm.gesture-injection { animation: gesture-injection 1.5s ease-in-out infinite; }
+        @keyframes gesture-injection { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-10px) rotate(-10deg); } }
+        
+        .avatar-arm.gesture-examine { animation: gesture-examine 2s ease-in-out infinite; }
+        @keyframes gesture-examine { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.1) rotate(5deg); } }
+        
+        .avatar-arm.gesture-symptom { animation: gesture-symptom 1.8s ease-in-out infinite; }
+        @keyframes gesture-symptom { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        
+        .avatar-arm.gesture-nausea { animation: gesture-nausea 2s ease-in-out infinite; }
+        @keyframes gesture-nausea { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+        
+        .avatar-arm.gesture-dizzy { animation: gesture-dizzy 1.5s ease-in-out infinite; }
+        @keyframes gesture-dizzy { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        
+        .avatar-arm.gesture-tired { animation: gesture-tired 2.5s ease-in-out infinite; }
+        @keyframes gesture-tired { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px) rotate(-5deg); } }
+        
+        .avatar-arm.gesture-breathe { animation: gesture-breathe 2s ease-in-out infinite; }
+        @keyframes gesture-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        
+        .avatar-arm.gesture-blood { animation: gesture-blood 1.8s ease-in-out infinite; }
+        @keyframes gesture-blood { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        
+        .avatar-arm.gesture-goodbye { animation: gesture-goodbye 1.5s ease-in-out infinite; }
+        @keyframes gesture-goodbye { 0%, 100% { transform: rotate(-20deg); } 50% { transform: rotate(20deg); } }
+        
+        .avatar-arm.gesture-sorry { animation: gesture-sorry 2s ease-in-out infinite; }
+        @keyframes gesture-sorry { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-15deg) translateY(-5px); } }
+        
+        .avatar-arm.gesture-urgent { animation: gesture-urgent 0.8s ease-in-out infinite; }
+        @keyframes gesture-urgent { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        
+        .avatar-arm.gesture-slow { animation: gesture-slow 3s ease-in-out infinite; }
+        @keyframes gesture-slow { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        
+        .avatar-arm.gesture-pharmacy { animation: gesture-pharmacy 2s ease-in-out infinite; }
+        @keyframes gesture-pharmacy { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
             color: white;
             font-size: 0.9rem;
             font-weight: 500;
@@ -964,7 +1040,32 @@
             'знать': 'know',
             'хотеть': 'want',
             'идти': 'walk',
-            'стоять': 'stand'
+            'стоять': 'stand',
+            // Медицинские слова и фразы
+            'врач': 'doctor', 'доктор': 'doctor', 'боль': 'pain', 'болит': 'pain', 'больно': 'pain',
+            'здоровье': 'health', 'здоров': 'health', 'болезнь': 'sick', 'болен': 'sick', 'больная': 'sick',
+            'лекарство': 'medicine', 'таблетка': 'medicine', 'таблетки': 'medicine', 'аптека': 'pharmacy',
+            'больница': 'hospital', 'поликлиника': 'hospital', 'скорая': 'ambulance',
+            'голова': 'head', 'головная': 'head', 'живот': 'stomach', 'сердце': 'heart', 'спина': 'back',
+            'рука': 'hand', 'нога': 'leg', 'горло': 'throat', 'глаз': 'eye', 'глаза': 'eye', 'ухо': 'ear', 'уши': 'ear',
+            'зуб': 'tooth', 'зубы': 'tooth', 'кашель': 'cough', 'насморк': 'cold', 'простуда': 'cold',
+            'температура': 'fever', 'жар': 'fever', 'давление': 'pressure', 'анализ': 'test', 'анализы': 'test',
+            'укол': 'injection', 'прививка': 'injection', 'рецепт': 'prescription',
+            'осмотр': 'examine', 'обследование': 'examine', 'диагноз': 'diagnosis',
+            'симптом': 'symptom', 'симптомы': 'symptom', 'аллергия': 'allergy',
+            'тошнит': 'nausea', 'тошнота': 'nausea', 'головокружение': 'dizzy', 'кружится': 'dizzy',
+            'слабость': 'weak', 'усталость': 'tired', 'устал': 'tired', 'сон': 'sleep', 'бессонница': 'insomnia',
+            'аппетит': 'appetite', 'дышать': 'breathe', 'дыхание': 'breathe', 'одышка': 'breathe',
+            'пульс': 'pulse', 'кровь': 'blood', 'моча': 'urine', 'операция': 'surgery',
+            'перевязка': 'bandage', 'повязка': 'bandage', 'гипс': 'cast', 'костыли': 'crutches',
+            'инвалид': 'disabled', 'коляска': 'wheelchair',
+            // Фразы для приема
+            'здравствуй': 'wave', 'добрый': 'wave', 'доброе': 'wave', 'досвидания': 'goodbye', 'пока': 'goodbye',
+            'извините': 'sorry', 'простите': 'sorry', 'ждать': 'wait', 'подождите': 'wait', 'минуту': 'wait',
+            'сейчас': 'now', 'срочно': 'urgent', 'быстро': 'fast', 'медленно': 'slow', 'еще': 'more',
+            'повторите': 'repeat', 'напишите': 'write', 'покажите': 'show',
+            'куда': 'where', 'где': 'where', 'когда': 'when', 'сколько': 'howmuch', 'как': 'how', 'почему': 'why',
+            'можно': 'can', 'нельзя': 'cannot', 'нужно': 'need', 'обязательно': 'must', 'вопрос': 'question', 'ответ': 'answer'
         };
         
         function animateAvatarSpeaking(text) {
@@ -976,12 +1077,8 @@
             let hasGesture = false;
             
             // Remove all previous gesture classes
-            armLeft.className = 'arm arm-left';
-            armRight.className = 'arm arm-right';
-            
+            armLeft.className = 'avatar-arm left';             armRight.className = 'avatar-arm right';            
             // Find and apply gesture for recognized words
-            for (let word of words) {
-                // Remove punctuation
                 word = word.replace(/[.,!?;:]/g, '');
                 if (signGestures[word]) {
                     const gesture = signGestures[word];
