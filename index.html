@@ -295,6 +295,81 @@
             transform-origin: top center;
         }
 
+                /* Arm segments */
+        .arm-upper {
+            width: 100%;
+            height: 30px;
+            background: #f4a460;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .arm-lower {
+            width: 100%;
+            height: 25px;
+            background: #f4a460;
+            border-radius: 8px;
+            margin-top: 2px;
+        }
+
+        /* Hand and Fingers */
+        .hand {
+            width: 25px;
+            height: 30px;
+            position: relative;
+            margin-top: 2px;
+        }
+
+        .palm {
+            width: 20px;
+            height: 18px;
+            background: #f4a460;
+            border-radius: 5px;
+            position: absolute;
+            top: 10px;
+            left: 2px;
+        }
+
+        .finger {
+            width: 4px;
+            height: 12px;
+            background: #f4a460;
+            border-radius: 3px;
+            position: absolute;
+            transform-origin: bottom center;
+            transition: transform 0.3s ease;
+        }
+
+        .finger.thumb {
+            width: 5px;
+            height: 10px;
+            left: -2px;
+            top: 12px;
+            transform: rotate(-30deg);
+        }
+
+        .finger.index {
+            left: 3px;
+            top: 0;
+        }
+
+        .finger.middle {
+            left: 8px;
+            top: -2px;
+            height: 14px;
+        }
+
+        .finger.ring {
+            left: 13px;
+            top: 0;
+        }
+
+        .finger.pinky {
+            left: 18px;
+            top: 3px;
+            height: 10px;
+        }
+
         .avatar-arm.signing {
             animation: sign-gesture 0.8s ease-in-out infinite;
         }
@@ -779,6 +854,77 @@
 </head>
 <body>
     <div class="container">
+
+                /* Finger animations for gestures */
+        .avatar-arm .finger {
+            transition: transform 0.3s ease;
+        }
+
+        /* Wave gesture - all fingers extended, waving */
+        .avatar-arm.gesture-wave .finger {
+            transform: rotate(0deg);
+        }
+        .avatar-arm.gesture-wave .finger.thumb {
+            transform: rotate(-45deg);
+        }
+
+        /* Hello/Wave - open hand */
+        .avatar-arm.gesture-hello .finger,
+        .avatar-arm.signing .finger {
+            transform: rotate(0deg);
+        }
+
+        /* Yes gesture - fist with thumb up */
+        .avatar-arm.gesture-yes .finger.index,
+        .avatar-arm.gesture-yes .finger.middle,
+        .avatar-arm.gesture-yes .finger.ring,
+        .avatar-arm.gesture-yes .finger.pinky {
+            transform: rotate(90deg);
+        }
+        .avatar-arm.gesture-yes .finger.thumb {
+            transform: rotate(-90deg);
+        }
+
+        /* No gesture - pointing finger */
+        .avatar-arm.gesture-no .finger.middle,
+        .avatar-arm.gesture-no .finger.ring,
+        .avatar-arm.gesture-no .finger.pinky,
+        .avatar-arm.gesture-no .finger.thumb {
+            transform: rotate(90deg);
+        }
+
+        /* Doctor/Medical - pointing gesture */
+        .avatar-arm.gesture-doctor .finger.middle,
+        .avatar-arm.gesture-doctor .finger.ring,
+        .avatar-arm.gesture-doctor .finger.pinky {
+            transform: rotate(80deg);
+        }
+
+        /* Pain gesture - clenched */
+        .avatar-arm.gesture-pain .finger {
+            transform: rotate(85deg);
+        }
+
+        /* Help gesture - open palm */
+        .avatar-arm.gesture-help .finger {
+            transform: rotate(-10deg);
+        }
+        .avatar-arm.gesture-help .finger.thumb {
+            transform: rotate(-60deg);
+        }
+
+        /* Medicine - pinching gesture */
+        .avatar-arm.gesture-medicine .finger.index {
+            transform: rotate(30deg);
+        }
+        .avatar-arm.gesture-medicine .finger.thumb {
+            transform: rotate(30deg);
+        }
+        .avatar-arm.gesture-medicine .finger.middle,
+        .avatar-arm.gesture-medicine .finger.ring,
+        .avatar-arm.gesture-medicine .finger.pinky {
+            transform: rotate(70deg);
+        }
         <header>
             <h1>🎤 Переводчик голоса в язык жестов</h1>
             <p class="subtitle">Реальный перевод речи в жестовый язык с синхронными субтитрами</p>
@@ -832,7 +978,6 @@
                         <div class="wave-bar"></div>
                     </div>
 
-                    <div class="avatar" id="avatar">
                         <!-- Head -->
                         <div class="avatar-head">
                             <div class="avatar-eye left">
@@ -846,9 +991,32 @@
 
                         <!-- Body -->
                         <div class="avatar-body">
-                            <div class="avatar-arm left" id="armLeft"></div>
-                            <div class="avatar-arm right" id="armRight"></div>
+                        <!-- Left Arm with Hand -->
+                        <div class="avatar-arm left" id="armLeft">
+                            <div class="arm-upper"></div>
+                            <div class="arm-lower"></div>
+                            <div class="hand" id="handLeft">
+                                <div class="palm"></div>
+                                <div class="finger thumb"></div>
+                                <div class="finger index"></div>
+                                <div class="finger middle"></div>
+                                <div class="finger ring"></div>
+                                <div class="finger pinky"></div>
+                            </div>
                         </div>
+                        <!-- Right Arm with Hand -->
+                        <div class="avatar-arm right" id="armRight">
+                            <div class="arm-upper"></div>
+                            <div class="arm-lower"></div>
+                            <div class="hand" id="handRight">
+                                <div class="palm"></div>
+                                <div class="finger thumb"></div>
+                                <div class="finger index"></div>
+                                <div class="finger middle"></div>
+                                <div class="finger ring"></div>
+                                <div class="finger pinky"></div>
+                            </div>
+                        </div>                        </div>
                     </div>
 
                     <div class="avatar-status" id="avatarStatus">Слушает...</div>
